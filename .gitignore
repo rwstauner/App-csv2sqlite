@@ -1,0 +1,5 @@
+/App-csv2sqlite*
+/.build
+/cover_db/
+/nytprof*
+/tags
