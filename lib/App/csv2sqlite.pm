@@ -57,8 +57,10 @@ sub getopt {
     );
     $p->getoptions($opts,
       'csv_files|csv_file|csvfiles|csvfile|csv=s@',
-      # TODO: 'csv_option|csvoption|o=%',
+      # TODO: 'named_csv_files=s%'
+      # TODO: 'csv_options|csvoptions|csv_option|csvoption|o=s%',
       # TODO: tableloader options like 'drop' or maybe --no-create
+      # TODO: 'loader_opts|l=s%'
       'dbname|database=s',
     ) or $class->help;
     $args = [@ARGV];
@@ -131,5 +133,6 @@ will became a table in the resulting sqlite database.
 * various L<DBIx::TableLoader> options
 * confirm using a pre-existing database?
 * more tests
+* allow specifying table names for csv files
 
 =cut
