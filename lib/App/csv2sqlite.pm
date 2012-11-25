@@ -101,6 +101,17 @@ sub run {
 
 1;
 
+=for Pod::Coverage
+new_from_argv
+help
+getopt
+load_tables
+run
+csv_files
+csv_options
+dbname
+dbh
+
 =head1 SYNOPSIS
 
   csv2sqlite doggies.csv kitties.csv pets.sqlite

@@ -3,6 +3,9 @@
 # ABSTRACT: Import CSV files into a SQLite database
 # PODNAME: csv2sqlite
 
+use strict;
+use warnings;
+
 use App::csv2sqlite;
 App::csv2sqlite->run([@ARGV]);
 
