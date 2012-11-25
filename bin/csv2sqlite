@@ -1,5 +1,8 @@
 #!/home/rando/perl5/perlbrew/perls/local/bin/perl
 
+# ABSTRACT: Import CSV files into a SQLite database
+# PODNAME: csv2sqlite
+
 use App::csv2sqlite;
 App::csv2sqlite->run([@ARGV]);
 
