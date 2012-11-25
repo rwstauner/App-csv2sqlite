@@ -113,4 +113,12 @@ Import CSV files into a SQLite database
 Each csv file specified on the command line
 will became a table in the resulting sqlite database.
 
+=head1 TODO
+
+=for :list
+* csv options
+* various L<DBIx::TableLoader> options
+* confirm using a pre-existing database?
+* more tests
+
 =cut
