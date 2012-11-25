@@ -1,0 +1,10 @@
+#!/home/rando/perl5/perlbrew/perls/local/bin/perl
+
+use App::csv2sqlite;
+App::csv2sqlite->run([@ARGV]);
+
+=head1 SYNOPSIS
+
+  csv2sqlite apples.csv oranges.csv fruit.sqlite
+
+=cut
