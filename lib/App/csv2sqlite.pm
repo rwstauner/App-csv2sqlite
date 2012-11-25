@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 package App::csv2sqlite;
-# ABSTRACT: Import CSV files into SQLite database
+# ABSTRACT: Import CSV files into a SQLite database
 
 use Moo 1;
 
