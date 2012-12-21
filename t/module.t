@@ -14,15 +14,15 @@ test_import({
   csvs => [qw( chips.csv pretzels.csv )],
   args => [],
   rs   => {
-    'SELECT flavor, size FROM chips ORDER BY size' => [
+    'SELECT flavor, size FROM chips ORDER BY flavor' => [
+      ['bbq', ' small'],
       ['plain', 'large'],
       ['spicy', 'medium'],
-      ['bbq', 'small'],
     ],
     'SELECT shape, "flavor|color" FROM pretzels ORDER BY shape' => [
       ['knot', 'doughy|golden brown'],
       ['ring', 'salty|brown'],
-      ['rod', 'salty|brown'],
+      ['rod', 'salty| brown'],
     ]
   },
 });
@@ -32,10 +32,12 @@ test_import({
   csvs => [qw( pretzels.csv )],
   args => [
     -o => 'sep_char=|',
+    -o => 'allow_whitespace=1',
   ],
   attr => {
     csv_options => {
       sep_char => '|',
+      allow_whitespace => 1,
     }
   },
   rs   => {
