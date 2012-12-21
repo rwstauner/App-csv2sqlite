@@ -1,4 +1,4 @@
-shape,color
-rod,brown
-ring,brown
-pretzel,brown
+shape,flavor|color
+rod,salty|brown
+ring,salty|brown
+knot,doughy|golden brown

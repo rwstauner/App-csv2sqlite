@@ -27,6 +27,26 @@ test_import({
   },
 });
 
+test_import({
+  desc => 'csv_opts: alternate separator',
+  csvs => [qw( pretzels.csv )],
+  args => [
+    -o => 'sep_char=|',
+  ],
+  attr => {
+    csv_options => {
+      sep_char => '|',
+    }
+  },
+  rs   => {
+    'SELECT "shape,flavor", "color" FROM pretzels ORDER BY "shape,flavor"' => [
+      ['knot,doughy', 'golden brown'],
+      ['ring,salty', 'brown'],
+      ['rod,salty', 'brown'],
+    ]
+  },
+});
+
 sub test_import {
   my $self = shift;
 
