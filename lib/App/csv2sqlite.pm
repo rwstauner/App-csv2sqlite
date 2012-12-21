@@ -58,7 +58,7 @@ sub getopt {
     $p->getoptions($opts,
       'csv_files|csv_file|csvfiles|csvfile|csv=s@',
       # TODO: 'named_csv_files=s%'
-      # TODO: 'csv_options|csvoptions|csv_option|csvoption|o=s%',
+      'csv_options|csv-opt|csvopt|o=s%',
       # TODO: tableloader options like 'drop' or maybe --no-create
       # TODO: 'loader_opts|l=s%'
       'dbname|database=s',
@@ -83,9 +83,13 @@ sub load_tables {
   # TODO: option for wrapping the whole loop in a transaction rather than each table
 
   foreach my $file ( @{ $self->csv_files } ){
-    DBIx::TableLoader::CSV->new(
-      %{ $self->csv_options },
+    my %opts = (
+      csv_opts => { %{ $self->csv_options } },
       file => $file,
+    );
+
+    DBIx::TableLoader::CSV->new(
+      %opts,
       dbh  => $self->dbh,
     )->load;
   }
