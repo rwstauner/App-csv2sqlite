@@ -9,7 +9,7 @@ use Moo 1;
 
 use DBI 1.6 ();
 use DBD::SQLite 1 ();
-use DBIx::TableLoader::CSV 1.100 (); # catch csv errors
+use DBIx::TableLoader::CSV 1.101 (); # catch csv errors and close transactions
 use Getopt::Long 2.34 ();
 
 sub new_from_argv {

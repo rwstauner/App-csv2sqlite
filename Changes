@@ -2,6 +2,9 @@ Revision history for App-csv2sqlite
 
 {{$NEXT}}
 
+  - Bump required version of DBIx::TableLoader::CSV to 1.101
+    to get bugfix in superclass (DBIx::TableLoader 1.100).
+
 0.001     2012-11-25T02:35:08Z
 
   - Initial release
