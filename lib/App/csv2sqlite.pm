@@ -78,6 +78,7 @@ sub getopt {
     $p->getoptions($opts,
       'csv_files|csv-file|csvfile|csv=s@',
       # TODO: 'named_csv_files=s%'
+      # or maybe --csv and --named should be subs that append to an array ref to keep order?
       'csv_options|csv-opt|csvopt|o=s%',
       # TODO: tableloader options like 'drop' or maybe --no-create
       'loader_options|loader-opt|loaderopt|l=s%',
@@ -108,6 +109,10 @@ sub load_tables {
       csv_opts => { %{ $self->csv_options } },
       file => $file,
     );
+
+    # TODO: This could work but i hate the escaping thing.
+    # Allow table=file (use "=file" for files with an equal sign).
+    #if( $file =~ /^([^=:]*)[=:](.+)$/ ){ $opts{name} = $1 if $1; $opts{file} = $2; }
 
     DBIx::TableLoader::CSV->new(
       %opts,
