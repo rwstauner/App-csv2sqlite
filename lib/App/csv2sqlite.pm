@@ -141,6 +141,7 @@ load_tables
 run
 csv_files
 csv_options
+loader_options
 dbname
 dbh
 
