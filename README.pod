@@ -2,9 +2,9 @@
 
 =encoding utf-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS TODO CSV csv sqlite cpan testmatrix url
-annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata
-placeholders metacpan
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS TODO CSV csv sqlite csv2sqlite --csv
+--csv-file --csv-opt --dbname cpan testmatrix url annocpan anno bugtracker
+rt cpants kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 NAME
 
@@ -12,11 +12,14 @@ App::csv2sqlite - Import CSV files into a SQLite database
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
   csv2sqlite doggies.csv kitties.csv pets.sqlite
+
+  # configure CSV parsing as necessary:
+  csv2sqlite -o sep_char=$'\t' plants.tab plants.sqlite
 
 =head1 DESCRIPTION
 
@@ -26,6 +29,28 @@ Import CSV files into a SQLite database
 Each csv file specified on the command line
 will became a table in the resulting sqlite database.
 
+=head1 OPTIONS
+
+=over 4
+
+=item --csv-file (or --csv)
+
+The csv files to load
+
+=item --csv-opt (or -o)
+
+A hash of key=value options to pass to L<Text::CSV>
+
+=item --dbname (or --database)
+
+The file path for the SQLite database
+
+=item --loader-opt (or -l)
+
+A hash of key=value options to pass to L<DBIx::TableLoader::CSV>
+
+=back
+
 =for Pod::Coverage new_from_argv
 help
 getopt
@@ -33,6 +58,7 @@ load_tables
 run
 csv_files
 csv_options
+loader_options
 dbname
 dbh
 
@@ -42,11 +68,7 @@ dbh
 
 =item *
 
-csv options
-
-=item *
-
-various L<DBIx::TableLoader> options
+specific L<DBIx::TableLoader> options?
 
 =item *
 
@@ -55,6 +77,10 @@ confirm using a pre-existing database?
 =item *
 
 more tests
+
+=item *
+
+allow specifying table names for csv files
 
 =back
 
