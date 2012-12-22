@@ -62,7 +62,7 @@ sub getopt {
       config => [qw(pass_through auto_help auto_version)],
     );
     $p->getoptions($opts,
-      'csv_files|csv_file|csvfiles|csvfile|csv=s@',
+      'csv_files|csv-file|csvfile|csv=s@',
       # TODO: 'named_csv_files=s%'
       'csv_options|csv-opt|csvopt|o=s%',
       # TODO: tableloader options like 'drop' or maybe --no-create
