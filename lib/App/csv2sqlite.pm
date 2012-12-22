@@ -27,6 +27,11 @@ has csv_options => (
   default    => sub { +{} },
 );
 
+has loader_options => (
+  is         => 'ro',
+  default    => sub { +{} },
+);
+
 has dbname => (
   is         => 'ro',
 );
@@ -60,7 +65,7 @@ sub getopt {
       # TODO: 'named_csv_files=s%'
       'csv_options|csv-opt|csvopt|o=s%',
       # TODO: tableloader options like 'drop' or maybe --no-create
-      # TODO: 'loader_opts|l=s%'
+      'loader_options|loader-opt|loaderopt|l=s%',
       'dbname|database=s',
     ) or $class->help;
     $args = [@ARGV];
@@ -84,6 +89,7 @@ sub load_tables {
 
   foreach my $file ( @{ $self->csv_files } ){
     my %opts = (
+      %{ $self->loader_options },
       csv_opts => { %{ $self->csv_options } },
       file => $file,
     );
