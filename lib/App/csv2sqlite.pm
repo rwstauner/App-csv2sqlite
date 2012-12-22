@@ -52,6 +52,20 @@ sub _build_dbh {
 
 sub help { Getopt::Long::HelpMessage(2); }
 
+=head1 OPTIONS
+
+=for :list
+= --csv-file (or --csv)
+The csv files to load
+= --csv-opt (or -o)
+A hash of key=value options to pass to L<Text::CSV>
+= --dbname (or --database)
+The file path for the SQLite database
+= --loader-opt (or -l)
+A hash of key=value options to pass to L<DBIx::TableLoader::CSV>
+
+=cut
+
 sub getopt {
   my ($class, $args) = @_;
   my $opts = {};
@@ -129,6 +143,9 @@ dbh
 
   csv2sqlite doggies.csv kitties.csv pets.sqlite
 
+  # configure CSV parsing as necessary:
+  csv2sqlite -o sep_char=$'\t' plants.tab plants.sqlite
+
 =head1 DESCRIPTION
 
 Import CSV files into a SQLite database
@@ -140,8 +157,7 @@ will became a table in the resulting sqlite database.
 =head1 TODO
 
 =for :list
-* csv options
-* various L<DBIx::TableLoader> options
+* specific L<DBIx::TableLoader> options?
 * confirm using a pre-existing database?
 * more tests
 * allow specifying table names for csv files
