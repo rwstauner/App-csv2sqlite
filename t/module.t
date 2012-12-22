@@ -9,8 +9,7 @@ eval "require $mod" or die $@;
 
 my $dir = tempdir('csv2sqlite.XXXXXX', TMPDIR => 1, CLEANUP => 1);
 
-test_import({
-  desc => 'basic',
+test_import('basic', {
   csvs => [qw( chips.csv pretzels.csv )],
   args => [],
   rs   => {
@@ -27,8 +26,7 @@ test_import({
   },
 });
 
-test_import({
-  desc => 'csv_opts: alternate separator',
+test_import('csv_opts: alternate separator', {
   csvs => [qw( pretzels.csv )],
   args => [
     -o => 'sep_char=|',
@@ -50,9 +48,9 @@ test_import({
 });
 
 sub test_import {
-  my $self = shift;
+  my ($desc, $self) = @_;
 
-  subtest $self->{desc}, sub {
+  subtest $desc, sub {
 
     my @csvf = map { catfile(corpus => $_) } @{ $self->{csvs} };
     my $db = catfile($dir, 'snacks.sqlite');
