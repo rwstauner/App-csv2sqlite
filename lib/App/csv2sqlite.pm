@@ -42,6 +42,7 @@ has dbh => (
 
 sub _build_dbh {
   my ($self) = @_;
+  # TODO: does the dbname need to be escaped in some way?
   my $dbh = DBI->connect('dbi:SQLite:dbname=' . $self->dbname, undef, undef, {
     RaiseError => 1,
     PrintError => 0,
