@@ -93,10 +93,12 @@ test_import('csv_opts: alternate separator', {
 sub test_import {
   my ($desc, $self) = @_;
 
-  subtest $desc, sub {
+subtest $desc, sub {
 
+  my $db = catfile($dir, 'snacks.sqlite');
+
+  {
     my @csvf = map { catfile(corpus => $_) } @{ $self->{csvs} };
-    my $db = catfile($dir, 'snacks.sqlite');
     my $app = $mod->new_from_argv([ @{ $self->{args} || [] }, @csvf, $db ]);
 
     is_deeply $app->csv_files, [ @csvf ], 'input csv files';
@@ -130,9 +132,12 @@ sub test_import {
         'database populated from csv';
     }
 
-    #system("sqlite3 $db");
-    unlink $db unless $self->{keep_db};
-  };
+  }
+
+  # database handles must be cleaned up before removing the db file
+  unlink $db unless $self->{keep_db};
+};
+
 }
 
 done_testing;
