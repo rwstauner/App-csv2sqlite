@@ -12,7 +12,7 @@ App::csv2sqlite - Import CSV files into a SQLite database
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
