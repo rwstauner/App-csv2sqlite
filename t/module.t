@@ -1,14 +1,8 @@
 use strict;
 use warnings;
 use Test::More 0.96;
-use Try::Tiny 0.09;
-use File::Spec::Functions qw( catfile ); # core
-use File::Temp 0.19 qw( tempdir );
-
-my $mod = 'App::csv2sqlite';
-eval "require $mod" or die $@;
-
-my $dir = tempdir('csv2sqlite.XXXXXX', TMPDIR => 1, CLEANUP => 1);
+use lib 't/lib';
+use C2STests;
 
 my @chips_rows = (
   ['bbq', ' small'],
@@ -88,56 +82,6 @@ test_import('csv_opts: alternate separator', {
     },
     keep_db => 0,
   });
-}
-
-sub test_import {
-  my ($desc, $self) = @_;
-
-subtest $desc, sub {
-
-  my $db = catfile($dir, 'snacks.sqlite');
-
-  {
-    my @csvf = map { catfile(corpus => $_) } @{ $self->{csvs} };
-    my $app = $mod->new_from_argv([ @{ $self->{args} || [] }, @csvf, $db ]);
-
-    is_deeply $app->csv_files, [ @csvf ], 'input csv files';
-    is $app->dbname, $db, 'last arg is output database';
-
-    while( my ($k, $v) = each %{ $self->{attr} } ){
-      is_deeply $app->$k, $v, "attribute $k set";
-    }
-
-    try {
-      $app->load_tables;
-    }
-    catch {
-      if( $self->{error} ){
-        like $_[0], $self->{error}, 'caught expected error';
-      }
-      else {
-        # unexpected; rethrow
-        die $_[0];
-      }
-    };
-
-    # TODO: fix encoding so spicy can be jalapeño
-
-    my $dbh = DBI->connect('dbi:SQLite:dbname=' . $db);
-
-    while( my ($sql, $exp) = each %{ $self->{rs} } ){
-      is_deeply
-        $dbh->selectall_arrayref($sql),
-        $exp,
-        'database populated from csv';
-    }
-
-  }
-
-  # database handles must be cleaned up before removing the db file
-  unlink $db unless $self->{keep_db};
-};
-
 }
 
 done_testing;
