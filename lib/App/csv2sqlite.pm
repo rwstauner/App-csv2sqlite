@@ -9,13 +9,24 @@ use Moo 1;
 
 use DBI 1.6 ();
 use DBD::SQLite 1 ();
-use DBIx::TableLoader::CSV 1.101 (); # catch csv errors and close transactions
+use DBIx::TableLoader::CSV 1.102 (); # catch csv errors and close transactions; file_encoding
 use Getopt::Long 2.34 ();
 
 sub new_from_argv {
   my ($class, $args) = @_;
   $class->new( $class->getopt($args) );
 }
+
+around BUILDARGS => sub {
+  my ($orig, $self, @args) = @_;
+  my $args = $self->$orig(@args);
+
+  if( my $enc = delete $args->{encoding} ){
+    ($args->{loader_options} ||= {})->{file_encoding} ||= $enc;
+  }
+
+  return $args;
+};
 
 has csv_files => (
   is         => 'ro',
@@ -46,8 +57,13 @@ sub _build_dbh {
   my $dbh = DBI->connect('dbi:SQLite:dbname=' . $self->dbname, undef, undef, {
     RaiseError => 1,
     PrintError => 0,
+    sqlite_unicode => $self->encoding ? 1 : 0,
   });
   return $dbh;
+}
+
+sub encoding {
+  return $_[0]->loader_options->{file_encoding};
 }
 
 sub help { Getopt::Long::HelpMessage(2); }
@@ -61,6 +77,9 @@ The csv files to load
 A hash of key=value options to pass to L<Text::CSV>
 = --dbname (or --database)
 The file path for the SQLite database
+= --encoding (or -e)
+The encoding of the csv files (a shortcut for C<< --loader-opt file_encoding=$enc >>);
+(Strings will be stored in the database in UTF-8.)
 = --loader-opt (or -l)
 A hash of key=value options to pass to L<DBIx::TableLoader::CSV>
 
@@ -83,6 +102,7 @@ sub getopt {
       # TODO: tableloader options like 'drop' or maybe --no-create
       'loader_options|loader-opt|loaderopt|l=s%',
       'dbname|database=s',
+      'encoding|enc|e=s',
     ) or $class->help;
     $args = [@ARGV];
   }
@@ -144,6 +164,8 @@ csv_options
 loader_options
 dbname
 dbh
+BUILDARGS
+encoding
 
 =head1 SYNOPSIS
 
