@@ -2,6 +2,8 @@ Revision history for App-csv2sqlite
 
 {{$NEXT}}
 
+0.004     2013-01-26T06:10:30Z
+
   - Add 'encoding' option for specifying the encoding of the csv files.
     (This bumps the prereq for DBIx::TableLoader::CSV to 1.102 as it
     is merely a shortcut for setting 'file_encoding' in loader_options.)

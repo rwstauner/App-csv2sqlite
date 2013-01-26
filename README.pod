@@ -12,7 +12,7 @@ App::csv2sqlite - Import CSV files into a SQLite database
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -45,6 +45,11 @@ A hash of key=value options to pass to L<Text::CSV>
 
 The file path for the SQLite database
 
+=item --encoding (or -e)
+
+The encoding of the csv files (a shortcut for C<< --loader-opt file_encoding=$enc >>);
+(Strings will be stored in the database in UTF-8.)
+
 =item --loader-opt (or -l)
 
 A hash of key=value options to pass to L<DBIx::TableLoader::CSV>
@@ -61,6 +66,8 @@ csv_options
 loader_options
 dbname
 dbh
+BUILDARGS
+encoding
 
 =head1 TODO
 
