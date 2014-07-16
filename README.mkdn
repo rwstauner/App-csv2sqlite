@@ -1,0 +1,94 @@
+# NAME
+
+App::csv2sqlite - Import CSV files into a SQLite database
+
+# VERSION
+
+version 0.005
+
+# SYNOPSIS
+
+    csv2sqlite doggies.csv kitties.csv pets.sqlite
+
+    # configure CSV parsing as necessary:
+    csv2sqlite -o sep_char=$'\t' plants.tab plants.sqlite
+
+# DESCRIPTION
+
+Import CSV files into a SQLite database
+(using [DBIx::TableLoader::CSV](https://metacpan.org/pod/DBIx::TableLoader::CSV)).
+
+Each csv file specified on the command line
+will became a table in the resulting sqlite database.
+
+# OPTIONS
+
+- --csv-file (or --csv)
+
+    The csv files to load
+
+- --csv-opt (or -o)
+
+    A hash of key=value options to pass to [Text::CSV](https://metacpan.org/pod/Text::CSV)
+
+- --dbname (or --database)
+
+    The file path for the SQLite database
+
+- --encoding (or -e)
+
+    The encoding of the csv files (a shortcut for `--loader-opt file_encoding=$enc`);
+    (Strings will be stored in the database in UTF-8.)
+
+- --loader-opt (or -l)
+
+    A hash of key=value options to pass to [DBIx::TableLoader::CSV](https://metacpan.org/pod/DBIx::TableLoader::CSV)
+
+# TODO
+
+- specific [DBIx::TableLoader](https://metacpan.org/pod/DBIx::TableLoader) options?
+- confirm using a pre-existing database?
+- more tests
+- allow specifying table names for csv files
+
+# SUPPORT
+
+## Perldoc
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc App::csv2sqlite
+
+## Websites
+
+The following websites have more information about this module, and may be of help to you. As always,
+in addition to those websites please use your favorite search engine to discover more resources.
+
+- MetaCPAN
+
+    A modern, open-source CPAN search engine, useful to view POD in HTML format.
+
+    [http://metacpan.org/release/App-csv2sqlite](http://metacpan.org/release/App-csv2sqlite)
+
+## Bugs / Feature Requests
+
+Please report any bugs or feature requests by email to `bug-app-csv2sqlite at rt.cpan.org`, or through
+the web interface at [http://rt.cpan.org/NoAuth/ReportBug.html?Queue=App-csv2sqlite](http://rt.cpan.org/NoAuth/ReportBug.html?Queue=App-csv2sqlite). You will be automatically notified of any
+progress on the request by the system.
+
+## Source Code
+
+[https://github.com/rwstauner/App-csv2sqlite](https://github.com/rwstauner/App-csv2sqlite)
+
+    git clone https://github.com/rwstauner/App-csv2sqlite.git
+
+# AUTHOR
+
+Randy Stauner <rwstauner@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2012 by Randy Stauner.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
